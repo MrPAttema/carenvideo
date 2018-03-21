@@ -11,6 +11,8 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', 'WelcomeController@index');
+Route::get('/caren/auth', 'CarenAuthController@sendCarenAuthRequest');
+
+Route::get('/caren/auth/callback', 'CarenAuthController@getCarenAuthCallback');
+Route::get('/caren/auth/token', 'CarenAuthController@getCarenAuthToken');
