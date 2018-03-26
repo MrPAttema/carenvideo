@@ -13,16 +13,27 @@
                 @endauth
             </div>
         @endif
-                
-        {{--  <passport-clients></passport-clients>
-        <passport-authorized-clients></passport-authorized-clients>
-        <passport-personal-access-tokens></passport-personal-access-tokens>  --}}
-        <form action="/caren/auth" method="GET">
-            <button type="submit">Send Req</button>
-            {{ csrf_field() }}
-        </form>
-      
+        
+        <div class="top-right">
+            @if (session()->has('token'))
+                <form action="/caren/auth/destroy" method="POST">
+                    <button class="btn" type="submit">Uitloggen</button>
+                    {{ csrf_field() }}
+                </form>
+            @else 
+                <form action="/caren/auth" method="POST">
+                    <button class="btn" type="submit">Koppel met Carenzorgt</button>
+                    {{ csrf_field() }}
+                </form>
+            @endif
+        </div>
 
+        @if (session()->has('token'))
+            <form action="/caren/user/getdata" method="POST">
+                <button class="btn" type="submit">Vraag User Data</button>
+                {{ csrf_field() }}
+            </form>
+        @endif
     </div>
 @endsection
 

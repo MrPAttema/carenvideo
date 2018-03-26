@@ -3,7 +3,7 @@
 @import url('https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800');
 
 // Variables
-@import "variables";
+// @import "variables";
 
 html, body {
     background-color: #fff;
@@ -54,4 +54,18 @@ html, body {
 
 .m-b-md {
     margin-bottom: 30px;
+}
+.btn {
+    padding: 10px 20px;
+    background-color: #7e4468;
+    color: #fff;
+    font-family: inherit;
+    font-size: 20px;
+    border: none;
+    border-radius: 3px;
+    
+    :disabled {
+        color: #d6d6d6;
+        background-color: #757575;
+    }
 }

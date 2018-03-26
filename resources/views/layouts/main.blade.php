@@ -9,11 +9,11 @@
         <title>Laravel</title>
 
         {{-- CSS --}}
-        <link type="text/css" rel="stylesheet" src="{{ asset('/css/app.css') }}" >
+        <link type="text/css" rel="stylesheet" href="{{ asset('css/app.css') }}">
 
         {{--  SCRIPTS  --}}
         <script defer type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.4/socket.io.js"></script>
-        <script defer type="text/javascript" src="{{ asset('/js/app.js') }}"></script>
+        <script defer type="text/javascript" src="{{ asset('js/app.js') }}"></script>
     </head>
     <body>
         <div id="app">

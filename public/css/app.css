@@ -56,3 +56,13 @@ body {
   margin-bottom: 30px;
 }
 
+button.btn {
+  padding: 10px 20px;
+  background-color: #7e4468;
+  color: #fff;
+  font-family: inherit;
+  font-size: 20px;
+  border: none;
+  border-radius: 3px;
+}
+

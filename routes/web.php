@@ -12,7 +12,9 @@
 */
 
 Route::get('/', 'WelcomeController@index');
-Route::get('/caren/auth', 'CarenAuthController@sendCarenAuthRequest');
+Route::post('/caren/auth', 'CarenAuthController@sendCarenAuthRequest');
 
 Route::get('/caren/auth/callback', 'CarenAuthController@getCarenAuthCallback');
-Route::get('/caren/auth/token', 'CarenAuthController@getCarenAuthToken');
+Route::post('/caren/auth/destroy', 'CarenAuthController@destroySession');
+
+Route::post('/caren/user/getdata', 'CarenUserController@getCarenUserData');
