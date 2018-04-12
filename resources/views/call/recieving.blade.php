@@ -13,11 +13,9 @@
             @endif
         </div>
 
-        @if (session()->has('carenAuthToken'))
-            <form action="/caren/call/setupcall" method="GET">
-                <button class="btn" type="submit">Bel Bram</button>
+            <form action="/setup/client" method="GET">
+                <button class="btn" type="submit">JE WORDT GEBELD</button>
             </form>
-        @endif
 
     </div>
 @endsection

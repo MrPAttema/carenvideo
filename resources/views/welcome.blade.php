@@ -28,12 +28,6 @@
             @endif
         </div>
 
-        @if (session()->has('token'))
-            <form action="/caren/user/getdata" method="POST">
-                <button class="btn" type="submit">Vraag User Data</button>
-                {{ csrf_field() }}
-            </form>
-        @endif
     </div>
 @endsection
 

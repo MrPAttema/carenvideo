@@ -13,23 +13,26 @@
 
 namespace App\Http\Controllers;
 
+use Event;
+use App\Events\SendCallRequest;
 use Illuminate\Http\Request;
 
 class CarenCallController extends Controller
 {   
-    public function __construct() {
+    // public function __construct() {
         
-        $this->middleware('CheckToken');
-    }
+    //     $this->middleware('CheckToken');
+    // }
 
     public function sendCallConnectRequest(Request $request) {
-            
-        
+         
+        Event::fire(new SendCallRequest());
+
     }
 
     public function getCallConnectStatus(Request $request) {
 
-        
+        return view('call.recieving');
 
     }
 
