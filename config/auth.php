@@ -45,6 +45,11 @@ return [
             'driver' => 'passport',
             'provider' => 'users',
         ],
+
+         'caren' => [
+            'driver' => 'session',
+            'provider' => 'caren',
+        ],
     ],
 
     /*
@@ -68,6 +73,10 @@ return [
         'users' => [
             'driver' => 'eloquent',
             'model' => App\User::class,
+        ],
+        'caren' => [
+            'driver' => 'eloquent',
+            'model' => App\Caren::class,
         ],
 
         // 'users' => [

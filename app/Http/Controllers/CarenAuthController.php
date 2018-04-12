@@ -7,7 +7,7 @@
  * We zorgen hier ook voor sessie beheer.
  * 
  * @author  Patrick Attema
- * @version V0.2 22-03-2018
+ * @version V0.3.0 11-04-2018
  * @since   V0.1
  */
 
@@ -19,34 +19,32 @@ use GuzzleHttp;
 
 class CarenAuthController extends Controller
 {
-   
+    private $clientID = '26e3717a35f9de0e7d2e9d4f435b740275edae462ef6677573ea312b70d42e6b';
+    private $redirectUri = 'https://carenvideo.test/caren/auth/callback';
+
     public function sendCarenAuthRequest(Request $request) {
 
         $responseType = 'code';
-        $clientID = '26e3717a35f9de0e7d2e9d4f435b740275edae462ef6677573ea312b70d42e6b';
-        $redirectUri = 'https://carenvideo.test/caren/auth/callback';
-        $scopes = array('user.read', 'calendar.read');    
+        $scopes = array('user.read', 'calendar.read');
         $scope = implode("+", $scopes);   
         
-        $url = "https://www.carenzorgt.nl/login/oauth/authorize?client_id=".$clientID."&redirect_uri=".$redirectUri."&scope=".$scope."&response_type=code";
+        $url = "https://www.carenzorgt.nl/login/oauth/authorize?client_id=".$this->clientID."&redirect_uri=".$this->redirectUri."&scope=".$scope."&response_type=code";
         
         return redirect($url);
     }
 
     public function getCarenAuthCallback(Request $request) {
 
-        $clientID = '26e3717a35f9de0e7d2e9d4f435b740275edae462ef6677573ea312b70d42e6b';
         $clientSecret = 'dad1f2b8685011b8095de778863a5c247ccea0a8e92ca6f8a0fee99207777571';
-        $redirectUri = 'https://carenvideo.test/caren/auth/callback';
         $authCode = $request->code;
 
-        $url = "https://www.carenzorgt.nl/oauth/token?client_id=".$clientID."&client_secret=".$clientSecret."&grant_type=authorization_code&code=".$authCode."&redirect_uri=".$redirectUri."";
+        $url = "https://www.carenzorgt.nl/oauth/token?client_id=".$this->clientID."&client_secret=".$clientSecret."&grant_type=authorization_code&code=".$authCode."&redirect_uri=".$this->redirectUri."";
 
         $params = [
-            'client_id' => $clientID,
+            'client_id' => $this->clientID,
             'client_secret' => $clientSecret,
             'authorization_code' => $authCode,
-            'redirect_uri' => $redirectUri,
+            'redirect_uri' => $this->redirectUri,
             'grant_type' => 'authorization_code',
         ];
 
@@ -54,15 +52,47 @@ class CarenAuthController extends Controller
         $accessTokenResponse = $client->request('POST', $url, []);
         $accessToken = json_decode($accessTokenResponse->getBody()->getContents(),true)['access_token'];
 
-        $request->session()->put('token', $accessToken);
+        $request->session()->put('carenAuthToken', $accessToken);
         $request->session()->save();
 
-        return redirect('/');
+        return $this->checkCarenAccountType();
+    }
+
+    private function checkCarenAccountType() {
+
+        $url = 'https://www.carenzorgt.nl/api/v1/user';
+        $token = session()->get('carenAuthToken');
+
+        $headr = array();
+        $headr[] = 'Content-length: 0';
+        $headr[] = 'Accept: application/json';
+        $headr[] = 'Authorization: Bearer '. $token;
+
+        $curl = curl_init( $url );
+        curl_setopt( $curl, CURLOPT_RETURNTRANSFER, true );
+        curl_setopt( $curl, CURLOPT_HTTPHEADER, $headr );
+        $response = json_decode(curl_exec($curl));
+        curl_close( $curl );
+        
+        session()->put('carenUserToken', $response);
+        session()->save();
+       
+        if ($response->_embedded->person->owner_id == null) {
+            
+            return redirect('/dashboard');
+
+        } else {
+            
+            return redirect('/setup/client');
+            
+        }
+
     }
 
     public function destroySession(Request $request) {
 
-        $request->session()->forget('token');
+        $request->session()->forget('carenAuthToken');
+        $request->session()->forget('carenUserToken');
         $request->session()->flush();
         return redirect('/');
     }

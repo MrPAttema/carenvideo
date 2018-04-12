@@ -1,6 +1,5 @@
 @import url(https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800);html,
 body {
-  background-color: #fff;
   color: #636b6f;
   font-family: 'Open Sans', sans-serif;
   font-weight: 100;
@@ -56,7 +55,7 @@ body {
   margin-bottom: 30px;
 }
 
-button.btn {
+.btn {
   padding: 10px 20px;
   background-color: #7e4468;
   color: #fff;
@@ -64,5 +63,11 @@ button.btn {
   font-size: 20px;
   border: none;
   border-radius: 3px;
+  margin: 0px 5px;
+}
+
+.btn :disabled {
+  color: #d6d6d6;
+  background-color: #757575;
 }
 

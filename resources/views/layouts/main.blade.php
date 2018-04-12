@@ -14,6 +14,7 @@
         {{--  SCRIPTS  --}}
         <script defer type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.4/socket.io.js"></script>
         <script defer type="text/javascript" src="{{ asset('js/app.js') }}"></script>
+        <script src="https://js.pusher.com/4.1/pusher.min.js"></script>
     </head>
     <body>
         <div id="app">

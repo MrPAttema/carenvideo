@@ -12,9 +12,17 @@
 */
 
 Route::get('/', 'WelcomeController@index');
+Route::get('/dashboard', 'DashboardController@index');
 Route::post('/caren/auth', 'CarenAuthController@sendCarenAuthRequest');
 
-Route::get('/caren/auth/callback', 'CarenAuthController@getCarenAuthCallback');
-Route::post('/caren/auth/destroy', 'CarenAuthController@destroySession');
 
-Route::post('/caren/user/getdata', 'CarenUserController@getCarenUserData');
+Route::group(['middleware' => ['web']], function () {
+    Route::get('/caren/auth/callback', 'CarenAuthController@getCarenAuthCallback');
+    Route::post('/caren/auth/destroy', 'CarenAuthController@destroySession');
+
+    Route::get('/setup/client', 'CarenSetupController@setupAsClient');
+    Route::get('/setup/master', 'CarenSetupController@setupAsMaster');
+
+    Route::get('/caren/call/setupcall', 'CarenCallController@sendCallConnectRequest');
+});
+

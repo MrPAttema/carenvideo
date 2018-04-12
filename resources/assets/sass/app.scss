@@ -6,7 +6,7 @@
 // @import "variables";
 
 html, body {
-    background-color: #fff;
+    // background-color: linear-gradient(141deg, #0fb8ad 0%, #1fc8db 51%, #2cb5e8 75%);
     color: #636b6f;
     font-family: 'Open Sans', sans-serif;
     font-weight: 100;
@@ -63,6 +63,7 @@ html, body {
     font-size: 20px;
     border: none;
     border-radius: 3px;
+    margin: 0px 5px;
     
     :disabled {
         color: #d6d6d6;
