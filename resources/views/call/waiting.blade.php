@@ -12,9 +12,20 @@
                 </form>
             @endif
         </div>
-
         
-        <span></span>
+        <span>Een moment.. We bellen..</span>
+
+    <style>
+        #outgoing {
+            width: 600px;
+            word-wrap: break-word;
+        }
+    </style>
+    <form>
+        <textarea id="incoming"></textarea>
+        <button type="submit">submit</button>
+    </form>
+    <pre id="outgoing"></pre>
     </div>
 @endsection
 

@@ -10,17 +10,34 @@
 
         {{-- CSS --}}
         <link type="text/css" rel="stylesheet" href="{{ asset('css/app.css') }}">
-
-        {{--  SCRIPTS  --}}
-        <script defer type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.4/socket.io.js"></script>
-        <script defer type="text/javascript" src="{{ asset('js/app.js') }}"></script>
-        <script src="https://js.pusher.com/4.1/pusher.min.js"></script>
+        
     </head>
     <body>
         <div id="app">
-
+            
             @yield('content')
-
+            
         </div>
     </body>
+
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.4/socket.io.js"></script>
+    <script type="text/javascript" src="https://js.pusher.com/4.1/pusher.min.js"></script>
+    <script type="text/javascript" src="{{ asset('js/app.js') }}"></script>
+    <script>   
+        // Enable pusher logging - don't include this in production
+        Pusher.logToConsole = true;
+        
+        var pusher = new Pusher('8dc95d49e9a8f15e0980', {
+            cluster: 'eu',
+            encrypted: true
+        });
+        var channel = pusher.subscribe('call.11566404');
+        
+        channel.bind('App\Events\SendCallRequest', function (data) {
+            
+        });
+        var triggered = channel.trigger('App\Events\SendCallRequest', function (data) {
+            console.log('Je wordt gebeld ' + data)
+        });
+    </script>
 </html>

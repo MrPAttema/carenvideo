@@ -26,7 +26,6 @@ class CallRequestRecieved
      */
     public function handle(SendCallRequest $event)
     {
-        echo "Triggerd some notificsation";
         return view('call.recieving');
     }
 }
