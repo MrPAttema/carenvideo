@@ -34,7 +34,7 @@ class CarenCallController extends Controller
 
     public function getCallConnectStatus(Request $request) {
 
-        return view('call.recieving');
+        // return view('call.recieving');
     }
 
     public function sendCurrentConnectUid(Request $request) {

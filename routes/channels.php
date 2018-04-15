@@ -15,6 +15,6 @@ Broadcast::channel('App.User.{id}', function ($user, $id) {
     return (int) $user->id === (int) $id;
 });
 
-Broadcast::channel('call.11566404', function ($user, $id) {
-    return (int) $user->id === (int) $id;
+Broadcast::channel('call.*', function ($user) {
+    return true;
 });

@@ -56,14 +56,16 @@ body {
 }
 
 .btn {
-  padding: 10px 20px;
+  padding: 10px 30px;
   background-color: #7e4468;
   color: #fff;
   font-family: inherit;
   font-size: 20px;
+  min-width: 8em;
   border: none;
   border-radius: 3px;
-  margin: 0px 5px;
+  margin: 5px 5px;
+  text-align: center;
 }
 
 .btn :disabled {

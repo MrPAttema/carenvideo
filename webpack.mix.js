@@ -12,9 +12,9 @@ let mix = require('laravel-mix');
  */
 
 mix.sass('resources/assets/sass/app.scss', 'public/css')
-mix.scripts([
-    // 'resources/assets/js/app.js',
-    // 'resources/assets/js/bootstrap.js',
+mix.js([
+    'resources/assets/js/bootstrap.js',
     'resources/assets/js/bundle.js',
     'resources/assets/js/peer.js',
+    'resources/assets/js/app.js',
 ], 'public/js/app.js');

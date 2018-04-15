@@ -3,10 +3,10 @@
         <div class="row">
             <div class="col-md-8 col-md-offset-2">
                 <div class="panel panel-default">
-                    <div class="panel-heading">Example Component</div>
+                    <div class="panel-heading">Video Bellen</div>
 
                     <div class="panel-body">
-                        I'm an example component!
+                        <span>Een moment.. We bellen..</span>
                     </div>
                 </div>
             </div>
@@ -17,7 +17,7 @@
 <script>
     export default {
         mounted() {
-            console.log('Component mounted.')
+            console.log('Calling Initialized.')
         }
     }
 </script>

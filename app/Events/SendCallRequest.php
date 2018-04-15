@@ -14,7 +14,7 @@ class SendCallRequest implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
-    private $userID;
+    public $userID;
 
     /**
      * Create a new event instance.
@@ -34,15 +34,15 @@ class SendCallRequest implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        return new PrivateChannel('call.1' .$this->userID); 
+        return new Channel('call.' .$this->userID); 
     }
 
-    // public function broadcastWith()
-    // {
-    //     return [
-    //         'user' => [
-    //             'id' => $this->userID,
-    //         ]
-    //     ];
-    // }
+    public function broadcastWith()
+    {
+        return [
+            'user' => [
+                'id' => $this->userID,
+            ]
+        ];
+    }
 }

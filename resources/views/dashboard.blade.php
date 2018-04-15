@@ -14,9 +14,9 @@
         </div>
 
         @if (session()->has('carenAuthToken'))
-            <form action="/caren/call/setupcall" method="GET">
-                <button class="btn" type="submit">Bel Bram</button>
-            </form>
+
+            <ContactList></ContactList>
+
         @endif
 
     </div>
