@@ -24,6 +24,6 @@ Route::group(['middleware' => ['web']], function () {
     Route::get('/setup/master', 'CarenSetupController@setupAsMaster');
 
     Route::get('/caren/call/setupcall', 'CarenCallController@sendCallConnectRequest');
-    Route::get('/caren/call/recieved', 'CarenCallController@getCallConnectStatus');
+    Route::post('/caren/call/recieving', 'CarenCallController@getCallConnectStatus');
 });
 

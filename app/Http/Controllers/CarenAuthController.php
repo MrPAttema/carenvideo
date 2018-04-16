@@ -16,6 +16,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp;
+use Event;
+use App\Events\UserOnline;
 
 class CarenAuthController extends Controller
 {
@@ -77,14 +79,16 @@ class CarenAuthController extends Controller
         session()->put('carenUserToken', $response);
         session()->save();
        
+        $userID = $response->_embedded->person->id;
+
         if ($response->_embedded->person->owner_id == null) {
             
+            Event::fire(new UserOnline($userID));
             return redirect('/dashboard');
-
         } else {
             
+            Event::fire(new UserOnline($userID));
             return redirect('/setup/client');
-            
         }
 
     }

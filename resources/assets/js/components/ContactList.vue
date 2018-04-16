@@ -23,21 +23,11 @@
 </template>
 
 <script>
+    // import axios from 'axios'
+
     export default {
-        created() {
+        mounted() {
             console.log('Contact List Mounted.')            
-        
-            Pusher.logToConsole = true;
-
-            var pusher = new Pusher('8dc95d49e9a8f15e0980', {
-                cluster: 'eu',
-                encrypted: true
-            });
-
-            var channel = pusher.subscribe('call.1566404');
-            channel.bind('App\\Events\\SendCallRequest', function(data) {
-                alert("Je hebt een oproep!");
-            });
         }
     }
 </script>
