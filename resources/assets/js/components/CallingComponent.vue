@@ -16,39 +16,34 @@
 
 <script>
     export default {
+        props: ['data'],
         data() {
             return {
-                body:"Een moment gedult.."
+                body:"Een moment geduld.."
             }
         },
         mounted() {
             console.log('Calling Initialized.')
-
-            Pusher.logToConsole = true;
 
             var pusher = new Pusher('8dc95d49e9a8f15e0980', {
                 cluster: 'eu',
                 encrypted: true
             });
 
-            var channel = pusher.subscribe('call.1566404');
+            var channel = pusher.subscribe('presence-contactstatus');
             var self = this
-            channel.bind('App\\Events\\SendCallRequest', function(data) {
-                console.log(data)
-                self.sendIdBack(data.user.id)
+            channel.bind('call.request', function(data) {
+                self.sendIdBack(data)
             });
         },
         methods: {
-            sendIdBack(id) {
+            sendIdBack(data) {
                 axios.post('/caren/call/recieving', {
-                    id: id
+                    data: data
                 })
-                .then(id => {
+                .then(response => {
                     this.body = "Gegevens controleren.."
-                    console.log(id)
-                })
-                .catch(e => {
-                    console.log(e)
+                    console.log(response)
                 })
             }
         }

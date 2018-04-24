@@ -17,29 +17,38 @@ use Event;
 use App\Events\SendCallRequest;
 use Illuminate\Http\Request;
 use Pusher;
+use Crypt;
+
 
 class CarenCallController extends Controller
-{      
+{         
     public function __construct() {
         
         // $this->middleware('CheckToken');
     }
 
     public function sendCallConnectRequest(Request $request) {
+
+        $userData = session()->get('carenUserToken');
+        $userID = $userData->_embedded->person->id;
         
-        Event::fire(new SendCallRequest());
+        $data = Crypt::encrypt($userID);
+
+        Event::fire(new SendCallRequest($data));
         return view('call.waiting');
 
     }
 
     public function getCallConnectStatus(Request $request) {
 
-        return 'ready for data';
+        return $request->userID;
+
+        Event::fire(new SendCallMeta($data));
+        return 'Ready';
     }
 
     public function sendCurrentConnectUid(Request $request) {
 
-        
 
     }
 

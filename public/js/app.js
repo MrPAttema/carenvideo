@@ -31431,6 +31431,7 @@ var pusher = new Pusher('8dc95d49e9a8f15e0980', {
 
 Vue.component('callingcomponent', __webpack_require__(41));
 Vue.component('contactlist', __webpack_require__(44));
+Vue.component('notifications', __webpack_require__(52));
 
 var app = new Vue({
   el: '#app'
@@ -42466,40 +42467,36 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 
 /* harmony default export */ __webpack_exports__["default"] = ({
+    props: ['data'],
     data: function data() {
         return {
-            body: "Een moment gedult.."
+            body: "Een moment geduld.."
         };
     },
     mounted: function mounted() {
         console.log('Calling Initialized.');
-
-        Pusher.logToConsole = true;
 
         var pusher = new Pusher('8dc95d49e9a8f15e0980', {
             cluster: 'eu',
             encrypted: true
         });
 
-        var channel = pusher.subscribe('call.1566404');
+        var channel = pusher.subscribe('presence-contactstatus');
         var self = this;
-        channel.bind('App\\Events\\SendCallRequest', function (data) {
-            console.log(data);
-            self.sendIdBack(data.user.id);
+        channel.bind('call.request', function (data) {
+            self.sendIdBack(data);
         });
     },
 
     methods: {
-        sendIdBack: function sendIdBack(id) {
+        sendIdBack: function sendIdBack(data) {
             var _this = this;
 
             axios.post('/caren/call/recieving', {
-                id: id
-            }).then(function (id) {
+                data: data
+            }).then(function (response) {
                 _this.body = "Gegevens controleren..";
-                console.log(id);
-            }).catch(function (e) {
-                console.log(e);
+                console.log(response);
             });
         }
     }
@@ -42615,8 +42612,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 
-// import axios from 'axios'
-
 /* harmony default export */ __webpack_exports__["default"] = ({
     mounted: function mounted() {
         console.log('Contact List Mounted.');
@@ -42649,7 +42644,7 @@ var staticRenderFns = [
             _c("div", { staticClass: "panel-body" }, [
               _c(
                 "form",
-                { attrs: { action: "/caren/call/setupcall", method: "GET" } },
+                { attrs: { action: "/caren/call/setup", method: "GET" } },
                 [
                   _c(
                     "button",
@@ -42661,7 +42656,7 @@ var staticRenderFns = [
               _vm._v(" "),
               _c(
                 "form",
-                { attrs: { action: "/caren/call/setupcall", method: "GET" } },
+                { attrs: { action: "/caren/call/recieving", method: "GET" } },
                 [
                   _c(
                     "button",
@@ -42673,7 +42668,7 @@ var staticRenderFns = [
               _vm._v(" "),
               _c(
                 "form",
-                { attrs: { action: "/caren/call/setupcall", method: "GET" } },
+                { attrs: { action: "/caren/call/setup", method: "GET" } },
                 [
                   _c(
                     "button",
@@ -42703,6 +42698,157 @@ if (false) {
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 48 */,
+/* 49 */,
+/* 50 */,
+/* 51 */,
+/* 52 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(11)
+/* script */
+var __vue_script__ = __webpack_require__(53)
+/* template */
+var __vue_template__ = __webpack_require__(54)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources\\assets\\js\\components\\Notifications.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-7407b301", Component.options)
+  } else {
+    hotAPI.reload("data-v-7407b301", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 53 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    data: function data() {
+        return {
+            notificationdata: ""
+        };
+    },
+    mounted: function mounted() {
+        console.log('Notifications Mounted.');
+
+        Pusher.logToConsole = true;
+
+        var token = window.axios.defaults.headers.common['X-CSRF-TOKEN'];
+
+        var pusher = new Pusher('8dc95d49e9a8f15e0980', {
+            cluster: 'eu',
+            encrypted: true,
+            authEndpoint: '/pusher/auth',
+            auth: {
+                headers: {
+                    'X-CSRF-Token': token
+                }
+            }
+        });
+
+        Echo.join('contactstatus').here('pusher:user.online', function (e) {
+            console.log(e);
+        });
+
+        // var presenceChannel = pusher.subscribe('presence-contactstatus');
+        // presenceChannel.bind('pusher:user.online', function () {
+        //     console.log('New subscriber', presenceChannel.members.count)
+        // });
+        var self = this;
+        // channel.bind('user.online', function(data) {
+        //     console.log(data)
+        //     // self.sendIdBack(data.user.id)
+        // });           
+        // channel.trigger('online', function(data) {
+        //     console.log(data)
+        //     // self.sendIdBack(data.user.id)
+        // });           
+    },
+
+    methods: {
+        sendIdBack: function sendIdBack(data) {
+            var _this = this;
+
+            axios.post('/caren/useronline', {
+                data: data
+            }).then(function (response) {
+                _this.notificationdata = data;
+                console.log(response);
+            });
+        }
+    }
+});
+
+/***/ }),
+/* 54 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "container" }, [
+    _c("div", { staticClass: "row" }, [
+      _c("div", { staticClass: "col-md-8 col-md-offset-2" }, [
+        _c("span", [_vm._v(_vm._s(this.notificationdata))])
+      ])
+    ])
+  ])
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-7407b301", module.exports)
+  }
+}
 
 /***/ })
 /******/ ]);

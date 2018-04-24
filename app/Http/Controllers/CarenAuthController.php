@@ -21,29 +21,30 @@ use App\Events\UserOnline;
 
 class CarenAuthController extends Controller
 {
-    private $clientID = '26e3717a35f9de0e7d2e9d4f435b740275edae462ef6677573ea312b70d42e6b';
     private $redirectUri = 'https://carenvideo.test/caren/auth/callback';
-
+    
     public function sendCarenAuthRequest(Request $request) {
-
+        
+        $clientID = env('caren_client_id');
         $responseType = 'code';
         $scopes = array('user.read', 'calendar.read');
         $scope = implode("+", $scopes);   
         
-        $url = "https://www.carenzorgt.nl/login/oauth/authorize?client_id=".$this->clientID."&redirect_uri=".$this->redirectUri."&scope=".$scope."&response_type=code";
+        $url = "https://www.carenzorgt.nl/login/oauth/authorize?client_id=".$clientID."&redirect_uri=".$this->redirectUri."&scope=".$scope."&response_type=code";
         
         return redirect($url);
     }
 
     public function getCarenAuthCallback(Request $request) {
 
-        $clientSecret = 'dad1f2b8685011b8095de778863a5c247ccea0a8e92ca6f8a0fee99207777571';
+        $clientID = env('caren_client_id');
+        $clientSecret = env('caren_client_secret');
         $authCode = $request->code;
 
-        $url = "https://www.carenzorgt.nl/oauth/token?client_id=".$this->clientID."&client_secret=".$clientSecret."&grant_type=authorization_code&code=".$authCode."&redirect_uri=".$this->redirectUri."";
+        $url = "https://www.carenzorgt.nl/oauth/token?client_id=".$clientID."&client_secret=".$clientSecret."&grant_type=authorization_code&code=".$authCode."&redirect_uri=".$this->redirectUri."";
 
         $params = [
-            'client_id' => $this->clientID,
+            'client_id' => $clientID,
             'client_secret' => $clientSecret,
             'authorization_code' => $authCode,
             'redirect_uri' => $this->redirectUri,
@@ -85,6 +86,7 @@ class CarenAuthController extends Controller
             
             Event::fire(new UserOnline($userID));
             return redirect('/dashboard');
+            
         } else {
             
             Event::fire(new UserOnline($userID));
@@ -99,5 +101,20 @@ class CarenAuthController extends Controller
         $request->session()->forget('carenUserToken');
         $request->session()->flush();
         return redirect('/');
+    }
+
+    public function pusherAuth() {
+
+        global $user;
+        if ($user->uid) {
+
+            $presence_data = array('name' => $user->name);
+            echo $pusher->presence_auth($_POST['channel_name'], $_POST['socket_id'], $user->uid, $presence_data);
+
+        } else {
+
+            header('', true, 403);
+            echo( "Forbidden" );
+        }
     }
 }

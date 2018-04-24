@@ -18,3 +18,7 @@ Broadcast::channel('App.User.{id}', function ($user, $id) {
 Broadcast::channel('call.*', function ($user) {
     return true;
 });
+
+Broadcast::channel('contactstatus', function ($user) {
+    return (int) $user->id === (int) $id;
+});

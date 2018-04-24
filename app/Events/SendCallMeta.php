@@ -10,10 +10,8 @@ use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 
-class UserOnline implements ShouldBroadcast
+class SendCallMeta implements ShouldBroadcast
 {
-    private $userID;
-    
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
     /**
@@ -21,9 +19,10 @@ class UserOnline implements ShouldBroadcast
      *
      * @return void
      */
-    public function __construct($userID)
+    public function __construct()
     {
-        $this->userID = $userID;
+        $userData = session()->get('carenUserToken');
+        $this->userID = $userData->_embedded->person->id;
     }
 
     /**
@@ -33,7 +32,12 @@ class UserOnline implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        return new PresenceChannel('contactListStatus');
+        return new PrivateChannel('call.' .$this->userID);
+    }
+
+    public function broadcastAs()
+    {
+        return 'call.metadata';
     }
 
     public function broadcastWith()
@@ -41,6 +45,8 @@ class UserOnline implements ShouldBroadcast
         return [
             'user' => [
                 'id' => $this->userID,
+                'name' => $this->userID,
+                'photo' => $this->userID,
             ]
         ];
     }

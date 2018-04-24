@@ -25,6 +25,7 @@ var pusher = new Pusher('8dc95d49e9a8f15e0980', {
 
 Vue.component('callingcomponent', require('./components/CallingComponent.vue'));
 Vue.component('contactlist', require('./components/ContactList.vue'));
+Vue.component('notifications', require('./components/Notifications.vue'));
 
 const app = new Vue({
     el: '#app'

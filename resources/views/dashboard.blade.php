@@ -2,6 +2,8 @@
 
 @section('content')
 
+<Notifications></Notifications>
+
     <div class="flex-center position-ref full-height">
 
         <div class="top-right">

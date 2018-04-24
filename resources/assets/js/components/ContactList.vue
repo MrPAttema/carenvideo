@@ -6,13 +6,13 @@
                     <div class="panel-heading">Mijn Contacten</div>
 
                     <div class="panel-body">
-                        <form action="/caren/call/setupcall" method="GET">
+                        <form action="/caren/call/setup" method="GET">
                             <button class="btn" type="submit">Bel Bram</button>
                         </form>
-                        <form action="/caren/call/setupcall" method="GET">
+                        <form action="/caren/call/recieving" method="GET">
                             <button class="btn" type="submit">Bel Dion</button>
                         </form>
-                        <form action="/caren/call/setupcall" method="GET">
+                        <form action="/caren/call/setup" method="GET">
                             <button class="btn" type="submit">Bel Kevin</button>
                         </form>
                     </div>
@@ -23,11 +23,9 @@
 </template>
 
 <script>
-    // import axios from 'axios'
-
     export default {
         mounted() {
-            console.log('Contact List Mounted.')            
+            console.log('Contact List Mounted.')        
         }
     }
 </script>
