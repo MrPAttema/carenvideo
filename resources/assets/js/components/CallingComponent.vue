@@ -29,7 +29,7 @@
                 cluster: 'eu',
                 encrypted: true
             });
-
+ 
             var channel = pusher.subscribe('presence-contactstatus');
             var self = this
             channel.bind('call.request', function(data) {
