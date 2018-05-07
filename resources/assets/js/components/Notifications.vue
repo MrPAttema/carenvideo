@@ -1,6 +1,7 @@
 <template>
     <div class="container">
         <div class="row">
+            {{this.title}}
             <div class="col-md-8 col-md-offset-2">
                 <span>{{this.notificationdata}}</span>
             </div>
@@ -10,9 +11,10 @@
 
 <script>
     export default {
+        props: ['title'],
         data() {
             return {
-                notificationdata:""
+                notificationdata: ""
             }
         },
         mounted() {

@@ -21,24 +21,26 @@ use App\Events\UserOnline;
 
 class CarenAuthController extends Controller
 {
-    private $redirectUri = 'https://carenvideo.test/caren/auth/callback';
+    private $redirectUri = 'http://localhost:8888/caren/auth/callback';
     
     public function sendCarenAuthRequest(Request $request) {
         
-        $clientID = env('caren_client_id');
+        $clientID = env('CAREN_CLIENT_ID');
         $responseType = 'code';
         $scopes = array('user.read', 'calendar.read');
         $scope = implode("+", $scopes);   
         
         $url = "https://www.carenzorgt.nl/login/oauth/authorize?client_id=".$clientID."&redirect_uri=".$this->redirectUri."&scope=".$scope."&response_type=code";
         
+        // dd($url);
+
         return redirect($url);
     }
 
     public function getCarenAuthCallback(Request $request) {
 
-        $clientID = env('caren_client_id');
-        $clientSecret = env('caren_client_secret');
+        $clientID = env('CAREN_CLIENT_ID');
+        $clientSecret = env('CAREN_CLIENT_SECRET');
         $authCode = $request->code;
 
         $url = "https://www.carenzorgt.nl/oauth/token?client_id=".$clientID."&client_secret=".$clientSecret."&grant_type=authorization_code&code=".$authCode."&redirect_uri=".$this->redirectUri."";
