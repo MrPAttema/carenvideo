@@ -17,6 +17,7 @@ use Illuminate\Http\Request;
 use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp;
 use Event;
+use Pusher\Pusher;
 use App\Events\UserOnline;
 
 class CarenAuthController extends Controller
@@ -27,7 +28,7 @@ class CarenAuthController extends Controller
         
         $clientID = env('CAREN_CLIENT_ID');
         $responseType = 'code';
-        $scopes = array('user.read', 'calendar.read');
+        $scopes = array('user.read', 'calendar.read', 'care_givers.read');
         $scope = implode("+", $scopes);   
         
         $url = "https://www.carenzorgt.nl/login/oauth/authorize?client_id=".$clientID."&redirect_uri=".$this->redirectUri."&scope=".$scope."&response_type=code";
@@ -76,23 +77,28 @@ class CarenAuthController extends Controller
         $curl = curl_init( $url );
         curl_setopt( $curl, CURLOPT_RETURNTRANSFER, true );
         curl_setopt( $curl, CURLOPT_HTTPHEADER, $headr );
-        $response = json_decode(curl_exec($curl));
+        $response = json_decode(curl_exec($curl), true);
         curl_close( $curl );
         
+        $response['_embedded']['person']['id'] = "TENNIS";
+        $userID = $response->_embedded->person->id;
+        $userID = Crypt::encrypt($userID);
+        
+      
         session()->put('carenUserToken', $response);
         session()->save();
        
-        $userID = $response->_embedded->person->id;
 
         if ($response->_embedded->person->owner_id == null) {
             
             Event::fire(new UserOnline($userID));
             return redirect('/dashboard');
-            
+
         } else {
             
             Event::fire(new UserOnline($userID));
             return redirect('/setup/client');
+            
         }
 
     }
@@ -103,20 +109,35 @@ class CarenAuthController extends Controller
         $request->session()->forget('carenUserToken');
         $request->session()->flush();
         return redirect('/');
+
     }
 
-    public function pusherAuth() {
+    public function pusherAuth(Request $request) {
 
-        global $user;
-        if ($user->uid) {
+        $userData = session()->get('carenUserToken');
+        return $userData; exit;
+        $userID = $userData->_embedded->person->id;
 
-            $presence_data = array('name' => $user->name);
-            echo $pusher->presence_auth($_POST['channel_name'], $_POST['socket_id'], $user->uid, $presence_data);
+        $userID = 1566404;
+
+        $pusherAppKey = env('PUSHER_APP_KEY');
+        $pusherAppSecret = env('PUSHER_APP_SECRET');
+        $pusherAppID = env('PUSHER_APP_ID');
+        
+        $data = Crypt::encrypt($userID);
+        if (isset($userID)) {
+
+            $pusher = new Pusher($pusherAppKey, $pusherAppSecret, $pusherAppID);
+            $auth = $pusher->socket_auth($request->channel_name, $request->socket_id);
+
+            $callback = str_replace('\\', '', $request->callback);
+            header('Content-Type: application/javascript');
+            echo($callback . '(' . $auth . ');');
 
         } else {
 
             header('', true, 403);
-            echo( "Forbidden" );
+            echo "Forbidden";
         }
     }
 }

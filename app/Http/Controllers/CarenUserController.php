@@ -21,7 +21,7 @@ class CarenUserController extends Controller
 {
     public function getCarenUserData() {
         
-        
-
+        $userData = session()->get('carenUserToken');
+        return $userData;
     }
 }
