@@ -77,12 +77,12 @@ class CarenAuthController extends Controller
         $curl = curl_init( $url );
         curl_setopt( $curl, CURLOPT_RETURNTRANSFER, true );
         curl_setopt( $curl, CURLOPT_HTTPHEADER, $headr );
-        $response = json_decode(curl_exec($curl), true);
+        $response = json_decode(curl_exec($curl));
         curl_close( $curl );
         
-        $response['_embedded']['person']['id'] = "TENNIS";
+        // $response['_embedded']['person']['id'] = "TENNIS";
         $userID = $response->_embedded->person->id;
-        $userID = Crypt::encrypt($userID);
+        // $userID = Crypt::encrypt($userID);
         
       
         session()->put('carenUserToken', $response);
