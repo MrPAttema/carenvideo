@@ -14,7 +14,8 @@
 Route::get('/', 'WelcomeController@index');
 Route::get('/dashboard', 'DashboardController@index');
 Route::post('/caren/auth', 'CarenAuthController@sendCarenAuthRequest');
-Route::post('/pusher/auth', 'CarenAuthController@pusherAuth');
+Route::post('/pusher/auth/private', 'CarenAuthController@pusherPrivateAuth');
+Route::post('/pusher/auth/presence', 'CarenAuthController@pusherPresenceAuth');
 
 
 Route::group(['middleware' => ['web']], function () {

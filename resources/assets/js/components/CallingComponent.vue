@@ -82,7 +82,7 @@ export default {
         encrypted: true,
         // authEndpoint: 'http://carenvideo.patrickattema.nl/pusher/auth'
         // authEndpoint: "http://localhost:5000/pusher/auth"
-        authEndpoint: "/pusher/auth"
+        authEndpoint: "/pusher/auth/presence"
       });
 
       console.log("pusher after", this.pusher);
