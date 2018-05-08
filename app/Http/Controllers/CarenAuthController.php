@@ -77,12 +77,12 @@ class CarenAuthController extends Controller
         $curl = curl_init( $url );
         curl_setopt( $curl, CURLOPT_RETURNTRANSFER, true );
         curl_setopt( $curl, CURLOPT_HTTPHEADER, $headr );
-        $response = json_decode(curl_exec($curl), true);
+        $response = json_decode(curl_exec($curl));
         curl_close( $curl );
         
-        $response['_embedded']['person']['id'] = "TENNIS";
+        // $response['_embedded']['person']['id'] = "TENNIS";
         $userID = $response->_embedded->person->id;
-        $userID = Crypt::encrypt($userID);
+        // $userID = Crypt::encrypt($userID);
         
       
         session()->put('carenUserToken', $response);
@@ -114,9 +114,9 @@ class CarenAuthController extends Controller
 
     public function pusherAuth(Request $request) {
 
-        $userData = session()->get('carenUserToken');
-        return $userData; exit;
-        $userID = $userData->_embedded->person->id;
+        // $userData = session()->get('carenUserToken');
+        // return $userData; exit;
+        // $userID = $userData->_embedded->person->id;
 
         $userID = 1566404;
 
@@ -124,7 +124,7 @@ class CarenAuthController extends Controller
         $pusherAppSecret = env('PUSHER_APP_SECRET');
         $pusherAppID = env('PUSHER_APP_ID');
         
-        $data = Crypt::encrypt($userID);
+        // $data = Crypt::encrypt($userID);
         if (isset($userID)) {
 
             $pusher = new Pusher($pusherAppKey, $pusherAppSecret, $pusherAppID);
@@ -132,7 +132,7 @@ class CarenAuthController extends Controller
 
             $callback = str_replace('\\', '', $request->callback);
             header('Content-Type: application/javascript');
-            echo($callback . '(' . $auth . ');');
+            echo($callback . ':' . $auth);
 
         } else {
 

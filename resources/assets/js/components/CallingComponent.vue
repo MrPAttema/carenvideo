@@ -97,6 +97,10 @@ export default {
         console.log("New subscriber", self.presenceChannel.members.count);
         self.startPeer(self.presenceChannel.members.count, stream);
       });
+
+      this.presenceChannel.bind("pusher:subscription_error", function(err) {
+        console.log('SUBSCRIPTION ERROR', err)
+      });
     },
 
     startPeer(count, stream) {
