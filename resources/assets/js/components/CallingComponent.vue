@@ -29,6 +29,8 @@
                 cluster: 'eu',
                 encrypted: true
             });
+
+            var token = window.axios.defaults.headers.common['X-CSRF-TOKEN'];            
  
             var channel = pusher.subscribe('presence-contactstatus');
             var self = this
@@ -39,7 +41,12 @@
         methods: {
             sendIdBack(data) {
                 axios.post('/caren/call/recieving', {
-                    data: data
+                    auth: {
+                        headers: {
+                            'X-CSRF-Token': token
+                    },
+                    data: data,
+                }
                 })
                 .then(response => {
                     this.body = "Gegevens controleren.."
