@@ -9,31 +9,25 @@ require('./bootstrap');
 
 window.Vue = require('vue');
 
+
+Pusher.logToConsole = true;
+
+var pusher = new Pusher('8dc95d49e9a8f15e0980', {
+    cluster: 'eu',
+    encrypted: true
+});
+
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-Vue.component('example-component', require('./components/ExampleComponent.vue'));
+Vue.component('callingcomponent', require('./components/CallingComponent.vue'));
+Vue.component('contactlist', require('./components/ContactList.vue'));
+Vue.component('notifications', require('./components/Notifications.vue'));
 
 const app = new Vue({
     el: '#app'
 });
 
-import VueChatScroll from 'vue-chat-scroll';
-import VueTimeago from 'vue-timeago';
-
-Vue.use(VueChatScroll);
-Vue.component('chat-room' , require('./components/laravel-video-chat/ChatRoom.vue'));
-Vue.component('group-chat-room', require('./components/laravel-video-chat/GroupChatRoom.vue'));
-Vue.component('video-section' , require('./components/laravel-video-chat/VideoSection.vue'));
-Vue.component('file-preview' , require('./components/laravel-video-chat/FilePreview.vue'));
-
-Vue.use(VueTimeago, {
-    name: 'timeago', // component name, `timeago` by default
-    locale: 'en-US',
-    locales: {
-        'en-US': require('vue-timeago/locales/en-US.json')
-    }
-})
