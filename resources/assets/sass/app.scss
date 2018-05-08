@@ -72,3 +72,29 @@ html, body {
         background-color: #757575;
     }
 }
+
+.room {
+    max-width: 800px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: auto;
+    padding: 20px;
+  
+    .video-container {
+      position: relative;
+  
+      video.streamVideo {
+        width: 100%;
+        background-color: pink;
+      }
+  
+      video.ownVideo {
+        position: absolute;
+        bottom: 15px;
+        right: 10px;
+        width: 200px;
+        box-shadow: 1px 1px 10px #000;
+      }
+    }
+  }
