@@ -141,6 +141,7 @@ class CarenAuthController extends Controller
         }
     }
 
+    public function pusherPresenceAuth(Request $request) {
 
         if (isset($userID)) {
             
