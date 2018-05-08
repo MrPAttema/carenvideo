@@ -112,11 +112,11 @@ class CarenAuthController extends Controller
 
     }
 
-    public function pusherAuth(Request $request) {
+    public function pusherPrivateAuth(Request $request) {
 
-        $userData = session()->get('carenUserToken');
-        return $userData; exit;
-        $userID = $userData->_embedded->person->id;
+        // $userData = session()->get('carenUserToken');
+        // return $userData; exit;
+        // $userID = $userData->_embedded->person->id;
 
         $userID = 1566404;
 
@@ -124,7 +124,7 @@ class CarenAuthController extends Controller
         $pusherAppSecret = env('PUSHER_APP_SECRET');
         $pusherAppID = env('PUSHER_APP_ID');
         
-        $data = Crypt::encrypt($userID);
+        // $data = Crypt::encrypt($userID);
         if (isset($userID)) {
 
             $pusher = new Pusher($pusherAppKey, $pusherAppSecret, $pusherAppID);
@@ -139,5 +139,20 @@ class CarenAuthController extends Controller
             header('', true, 403);
             echo "Forbidden";
         }
+    }
+
+
+        if (isset($userID)) {
+            
+            $pusher = new Pusher($pusherAppKey, $pusherAppSecret, $pusherAppID);
+            $presence_data = array('id' => $userID);
+            $auth = $pusher->presence_auth($request->channel_name, $request->socket_id, $userID, $presence_data);
+
+        } else {
+
+            header('', true, 403);
+            echo( "Forbidden" );
+        }
+
     }
 }
