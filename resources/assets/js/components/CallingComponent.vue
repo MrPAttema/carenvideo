@@ -51,6 +51,14 @@ export default {
     //   self.sendIdBack(data);
     // });
 
+    navigator.getUserMedia(
+      { video: true },
+      this.displayOwnVideo,
+      function (err) {
+        console.log("OWN MEDIA ERROR", err)
+      }
+    )
+
     // get video/voice stream
     navigator.getUserMedia(
       { video: true, audio: true },
@@ -70,6 +78,12 @@ export default {
           this.body = "Gegevens controleren..";
           console.log(response);
         });
+    },
+
+    displayOwnVideo(stream) {
+      let ownVideo = this.$refs.ownVideo;
+      ownVideo.srcObject = stream;
+      ownVideo.play();
     },
 
     gotMedia(stream) {
@@ -104,10 +118,6 @@ export default {
     },
 
     startPeer(count, stream) {
-      let ownVideo = this.$refs.ownVideo;
-      ownVideo.srcObject = stream;
-      ownVideo.play();
-
       if (count === 2) {
         this.isInitiator = true;
       }
