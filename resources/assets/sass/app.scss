@@ -84,17 +84,32 @@ html, body {
     .video-container {
       position: relative;
   
-      video.streamVideo {
-        width: 100%;
-        background-color: pink;
-      }
-  
-      video.ownVideo {
-        position: absolute;
-        bottom: 15px;
-        right: 10px;
-        width: 200px;
-        box-shadow: 1px 1px 10px #000;
-      }
+        video.streamVideo {
+            width: 100%;
+            background-color: pink;
+        }
+    
+        video.ownVideo {
+            position: absolute;
+            bottom: 15px;
+            right: 10px;
+            width: 200px;
+            box-shadow: 1px 1px 10px #000;
+        } 
+        @media only screen and (max-width: 600px) {
+            video.streamVideo {
+                width: 100%;
+                background-color: pink;
+                height: 500px;
+            }
+        
+            video.ownVideo {
+                position: absolute;
+                bottom: 15px;
+                right: 10px;
+                width: 200px;
+                box-shadow: 1px 1px 10px #000;
+            } 
+        }
     }
-  }
+}
