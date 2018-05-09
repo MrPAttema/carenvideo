@@ -74,12 +74,11 @@ body {
 }
 
 .room {
-  max-width: 800px;
+  max-width: 100vw;
   margin: 0 auto;
   display: grid;
   grid-template-columns: 1fr;
   grid-template-rows: auto;
-  padding: 20px;
 }
 
 .room .video-container {
@@ -88,7 +87,7 @@ body {
 
 .room .video-container video.streamVideo {
   width: 100%;
-  background-color: pink;
+  background-color: #333333;
 }
 
 .room .video-container video.ownVideo {
@@ -96,24 +95,29 @@ body {
   bottom: 15px;
   right: 10px;
   width: 200px;
-  -webkit-box-shadow: 1px 1px 10px #000;
-          box-shadow: 1px 1px 10px #000;
+  -webkit-box-shadow: 0px 0px 3px #a2a2a2;
+          box-shadow: 0px 0px 3px #a2a2a2;
 }
 
 @media only screen and (max-width: 600px) {
+  .room .video-container .row {
+    width: 100vw;
+    height: 100vh;
+  }
+
   .room .video-container video.streamVideo {
-    width: 100%;
-    background-color: pink;
-    height: 500px;
+    width: 100vw;
+    height: 100vh;
   }
 
   .room .video-container video.ownVideo {
     position: absolute;
     bottom: 15px;
     right: 10px;
-    width: 200px;
-    -webkit-box-shadow: 1px 1px 10px #000;
-            box-shadow: 1px 1px 10px #000;
+    min-width: 115px;
+    min-height: 180px;
+    max-width: 150px;
+    max-height: 225px;
   }
 }
 
