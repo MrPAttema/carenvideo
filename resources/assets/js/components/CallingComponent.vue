@@ -3,12 +3,6 @@
         <div class="row">
             <div class="col-md-8 col-md-offset-2">
                 <div class="panel panel-default">
-                    <div class="panel-heading">Video Bellen</div>
-
-                    <div class="panel-body">
-                        <span>We bellen.. {{this.body}}</span>
-                    </div>
-
                     <div class="room">
                         <div class="video-container">
                             <video class="streamVideo" ref="streamVideo" autoplay></video>

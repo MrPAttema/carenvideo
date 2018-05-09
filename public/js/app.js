@@ -47454,12 +47454,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
-//
-//
-//
-//
 
 
 
@@ -49671,12 +49665,6 @@ var render = function() {
     _c("div", { staticClass: "row" }, [
       _c("div", { staticClass: "col-md-8 col-md-offset-2" }, [
         _c("div", { staticClass: "panel panel-default" }, [
-          _c("div", { staticClass: "panel-heading" }, [_vm._v("Video Bellen")]),
-          _vm._v(" "),
-          _c("div", { staticClass: "panel-body" }, [
-            _c("span", [_vm._v("We bellen.. " + _vm._s(this.body))])
-          ]),
-          _vm._v(" "),
           _c("div", { staticClass: "room" }, [
             _c("div", { staticClass: "video-container" }, [
               _c("video", {
