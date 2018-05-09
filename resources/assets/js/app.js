@@ -12,10 +12,10 @@ window.Vue = require('vue');
 
 Pusher.logToConsole = true;
 
-var pusher = new Pusher('8dc95d49e9a8f15e0980', {
-    cluster: 'eu',
-    encrypted: true
-});
+// var pusher = new Pusher('8dc95d49e9a8f15e0980', {
+//     cluster: 'eu',
+//     encrypted: true
+// });
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

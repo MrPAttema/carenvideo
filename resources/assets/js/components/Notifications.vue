@@ -24,27 +24,27 @@
 
             var token = window.axios.defaults.headers.common['X-CSRF-TOKEN'];
 
-            var pusher = new Pusher('8dc95d49e9a8f15e0980', {
-                cluster: 'eu',
-                encrypted: true,
-                authEndpoint: '/pusher/auth',
-                auth: {
-                    headers: {
-                        'X-CSRF-Token': token
-                    }
-                }
-            });
+            // var pusher = new Pusher('8dc95d49e9a8f15e0980', {
+            //     cluster: 'eu',
+            //     encrypted: true,
+            //     authEndpoint: '/pusher/auth',
+            //     auth: {
+            //         headers: {
+            //             'X-CSRF-Token': token
+            //         }
+            //     }
+            // });
 
-            Echo.join('contactstatus')
-            .here('pusher:user.online', (e) => {
-                console.log(e)
-            });
+            // Echo.join('contactstatus')
+            // .here('pusher:user.online', (e) => {
+            //     console.log(e)
+            // });
 
             // var presenceChannel = pusher.subscribe('presence-contactstatus');
             // presenceChannel.bind('pusher:user.online', function () {
             //     console.log('New subscriber', presenceChannel.members.count)
             // });
-            var self = this
+            // var self = this
             // channel.bind('user.online', function(data) {
             //     console.log(data)
             //     // self.sendIdBack(data.user.id)

@@ -12,7 +12,7 @@
                     <div class="room">
                         <div class="video-container">
                             <video class="streamVideo" ref="streamVideo" autoplay></video>
-                            <video class="ownVideo" ref="ownVideo" autoplay></video>
+                            <video class="ownVideo" ref="ownVideo" autoplay muted></video>
                         </div>
                     </div>
                 </div>
@@ -96,6 +96,10 @@ export default {
       this.presenceChannel.bind("pusher:subscription_succeeded", function() {
         console.log("New subscriber", self.presenceChannel.members.count);
         self.startPeer(self.presenceChannel.members.count, stream);
+      });
+
+      this.presenceChannel.bind("pusher:subscription_error", function(err) {
+        console.log('SUBSCRIPTION ERROR', err)
       });
     },
 

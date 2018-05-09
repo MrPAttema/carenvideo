@@ -132,7 +132,7 @@ class CarenAuthController extends Controller
 
             $callback = str_replace('\\', '', $request->callback);
             header('Content-Type: application/javascript');
-            echo($callback . '(' . $auth . ');');
+            echo($callback . ':' . $auth);
 
         } else {
 
@@ -143,16 +143,21 @@ class CarenAuthController extends Controller
 
     public function pusherPresenceAuth(Request $request) {
 
+        $userID = rand(1, 1000000000);
+        $pusherAppKey = env('PUSHER_APP_KEY');
+        $pusherAppSecret = env('PUSHER_APP_SECRET');
+        $pusherAppID = env('PUSHER_APP_ID');
+
         if (isset($userID)) {
             
             $pusher = new Pusher($pusherAppKey, $pusherAppSecret, $pusherAppID);
             $presence_data = array('id' => $userID);
-            $auth = $pusher->presence_auth($request->channel_name, $request->socket_id, $userID, $presence_data);
+            echo $pusher->presence_auth($request->channel_name, $request->socket_id, $userID, $presence_data);
 
         } else {
 
             header('', true, 403);
-            echo( "Forbidden" );
+            echo ('Forbidden');
         }
 
     }
