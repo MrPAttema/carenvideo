@@ -47512,10 +47512,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     //   self.sendIdBack(data);
     // });
 
-    navigator.getUserMedia({ video: true }, this.displayOwnVideo, function (err) {
-      console.log("OWN MEDIA ERROR", err);
-    });
-
     // get video/voice stream
     navigator.getUserMedia({ video: true, audio: true }, this.gotMedia, function (err) {
       console.log("MEDIA ERROR", err);
@@ -47532,11 +47528,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         _this.body = "Gegevens controleren..";
         console.log(response);
       });
-    },
-    displayOwnVideo: function displayOwnVideo(stream) {
-      var ownVideo = this.$refs.ownVideo;
-      ownVideo.srcObject = stream;
-      ownVideo.play();
     },
     gotMedia: function gotMedia(stream) {
       // var isInitiator = false;
@@ -47567,6 +47558,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       });
     },
     startPeer: function startPeer(count, stream) {
+      var ownVideo = this.$refs.ownVideo;
+      ownVideo.srcObject = stream;
+      ownVideo.play();
+
       if (count === 2) {
         this.isInitiator = true;
       }
@@ -49728,7 +49723,8 @@ var render = function() {
               _c("video", {
                 ref: "ownVideo",
                 staticClass: "ownVideo",
-                attrs: { autoplay: "" }
+                attrs: { autoplay: "", muted: "" },
+                domProps: { muted: true }
               })
             ])
           ])

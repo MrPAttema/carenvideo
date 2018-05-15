@@ -58,6 +58,8 @@ class CarenAuthController extends Controller
         $accessTokenResponse = $client->request('POST', $url, []);
         $accessToken = json_decode($accessTokenResponse->getBody()->getContents(),true)['access_token'];
 
+        // dd($accessToken);
+
         $request->session()->put('carenAuthToken', $accessToken);
         $request->session()->save();
 
