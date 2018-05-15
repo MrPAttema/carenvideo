@@ -14,15 +14,15 @@
             </div>
         @endif
         
-        <div class="top-right">
+        <div class="center">
             @if (session()->has('token'))
                 <form action="/caren/auth/destroy" method="POST">
-                    <button class="btn" type="submit">Uitloggen</button>
+                    <button class="btn-primary" type="submit">Uitloggen</button>
                     {{ csrf_field() }}
                 </form>
             @else 
                 <form action="/caren/auth" method="POST">
-                    <button class="btn" type="submit">Koppel met Carenzorgt</button>
+                    <button class="btn-primary" type="submit">Koppel met Carenzorgt</button>
                     {{ csrf_field() }}
                 </form>
             @endif
