@@ -49803,15 +49803,25 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
-//
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-    mounted: function mounted() {
-        console.log('Contact List Mounted.');
+    data: function data() {
+        return {
+            error: null,
+            careProviders: []
+        };
+    },
+
+    props: ['users'],
+    created: function created() {
+        var users = JSON.parse(this.users);
+        console.log(users);
+
+        if (users.count === 0) {
+            this.error = 'Je hebt nog geen andere gebruikers.';
+        } else {
+            this.careProviders = users._embedded.items;
+        }
     }
 });
 
@@ -49823,64 +49833,62 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm._m(0)
-}
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "container" }, [
-      _c("div", { staticClass: "row" }, [
-        _c("div", { staticClass: "col-md-8 col-md-offset-2" }, [
-          _c("div", { staticClass: "panel panel-default" }, [
+  return _c("div", { staticClass: "container" }, [
+    _c("div", { staticClass: "row" }, [
+      _c("div", { staticClass: "col-md-8 col-md-offset-2" }, [
+        _c(
+          "div",
+          {
+            staticClass: "panel panel-default",
+            staticStyle: { "text-align": "center" }
+          },
+          [
             _c("div", { staticClass: "panel-heading" }, [
               _vm._v("Mijn Contacten")
             ]),
             _vm._v(" "),
-            _c("div", { staticClass: "panel-body" }, [
-              _c(
-                "form",
-                { attrs: { action: "/caren/call/setup", method: "GET" } },
-                [
-                  _c(
-                    "button",
-                    { staticClass: "btn", attrs: { type: "submit" } },
-                    [_vm._v("Bel Bram")]
-                  )
-                ]
-              ),
-              _vm._v(" "),
-              _c(
-                "form",
-                { attrs: { action: "/caren/call/recieving", method: "GET" } },
-                [
-                  _c(
-                    "button",
-                    { staticClass: "btn", attrs: { type: "submit" } },
-                    [_vm._v("Bel Dion")]
-                  )
-                ]
-              ),
-              _vm._v(" "),
-              _c(
-                "form",
-                { attrs: { action: "/caren/call/setup", method: "GET" } },
-                [
-                  _c(
-                    "button",
-                    { staticClass: "btn", attrs: { type: "submit" } },
-                    [_vm._v("Bel Kevin")]
-                  )
-                ]
-              )
-            ])
-          ])
-        ])
+            _c("div", { staticClass: "error" }, [_vm._v(_vm._s(_vm.error))]),
+            _vm._v(" "),
+            !_vm.error
+              ? _c(
+                  "div",
+                  { staticClass: "panel-body" },
+                  _vm._l(_vm.careProviders, function(careProvider, index) {
+                    return _c(
+                      "form",
+                      {
+                        key: index,
+                        attrs: { action: "/caren/call/setup", method: "GET" }
+                      },
+                      [
+                        _c(
+                          "button",
+                          {
+                            staticClass: "btn-primary",
+                            staticStyle: { "margin-bottom": "5px" },
+                            attrs: { type: "submit" }
+                          },
+                          [
+                            _vm._v(
+                              "Bel " +
+                                _vm._s(careProvider.care_giver.first_name) +
+                                " " +
+                                _vm._s(careProvider.care_giver.last_name)
+                            )
+                          ]
+                        )
+                      ]
+                    )
+                  })
+                )
+              : _vm._e()
+          ]
+        )
       ])
     ])
-  }
-]
+  ])
+}
+var staticRenderFns = []
 render._withStripped = true
 module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
