@@ -31,6 +31,8 @@ export default {
   },
   props: ["users"],
   created() {
+
+    console.log('state', this.$store.state.test)
     let users = JSON.parse(this.users);
 
     if (users.count === 0) {
