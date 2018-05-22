@@ -58,6 +58,8 @@ class CarenAuthController extends Controller
         $accessTokenResponse = $client->request('POST', $url, []);
         $accessToken = json_decode($accessTokenResponse->getBody()->getContents(),true)['access_token'];
 
+        // dd($accessToken);
+
         $request->session()->put('carenAuthToken', $accessToken);
         $request->session()->save();
 
@@ -143,16 +145,19 @@ class CarenAuthController extends Controller
 
     public function pusherPresenceAuth(Request $request) {
 
-        $userID = rand(1, 1000000000);
+        $user = session()->get('carenUserToken');
+
+        $userId = $user->_embedded->person->id;
         $pusherAppKey = env('PUSHER_APP_KEY');
         $pusherAppSecret = env('PUSHER_APP_SECRET');
         $pusherAppID = env('PUSHER_APP_ID');
 
-        if (isset($userID)) {
+        if (isset($userId)) {
             
+
             $pusher = new Pusher($pusherAppKey, $pusherAppSecret, $pusherAppID);
-            $presence_data = array('id' => $userID);
-            echo $pusher->presence_auth($request->channel_name, $request->socket_id, $userID, $presence_data);
+            $presence_data = array('id' => $userId);
+            echo $pusher->presence_auth($request->channel_name, $request->socket_id, $userId);
 
         } else {
 

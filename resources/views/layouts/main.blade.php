@@ -9,7 +9,7 @@
         <title>{{ config('app.name') }}</title>
 
         {{-- CSS --}}
-        <link type="text/css" rel="stylesheet" href="{{ asset('css/app.css') }}">
+        <link type="text/css" rel="stylesheet" href="{{ asset('css/all.css') }}">
         
     </head>
     <body>

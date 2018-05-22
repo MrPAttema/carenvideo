@@ -9,7 +9,7 @@
         <div class="top-right">
             @if (session()->has('carenAuthToken'))
                 <form action="/caren/auth/destroy" method="POST">
-                    <button class="btn" type="submit">Uitloggen</button>
+                    <button class="btn-primary" type="submit">Uitloggen</button>
                     {{ csrf_field() }}
                 </form>
             @endif
@@ -17,7 +17,7 @@
 
         @if (session()->has('carenAuthToken'))
 
-            <ContactList></ContactList>
+            <ContactList :users="'{{ json_encode($response) }}'"></ContactList>
 
         @endif
 
