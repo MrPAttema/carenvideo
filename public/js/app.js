@@ -49784,6 +49784,8 @@ module.exports = Component.exports
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_pusher_js__ = __webpack_require__(17);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_pusher_js___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_pusher_js__);
 //
 //
 //
@@ -49803,26 +49805,47 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+
+
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-    data: function data() {
-        return {
-            error: null,
-            careProviders: []
-        };
-    },
+  data: function data() {
+    return {
+      error: null,
+      careProviders: [],
+      pusher: null,
+      presenceChannel: null
+    };
+  },
 
-    props: ['users'],
-    created: function created() {
-        var users = JSON.parse(this.users);
-        console.log(users);
+  props: ["users"],
+  created: function created() {
+    var users = JSON.parse(this.users);
 
-        if (users.count === 0) {
-            this.error = 'Je hebt nog geen andere gebruikers.';
-        } else {
-            this.careProviders = users._embedded.items;
-        }
+    if (users.count === 0) {
+      this.error = "Je hebt nog geen andere gebruikers om mee te bellen.";
+    } else {
+      this.careProviders = users._embedded.items;
     }
+
+    this.pusher = new __WEBPACK_IMPORTED_MODULE_0_pusher_js___default.a("8dc95d49e9a8f15e0980", {
+      cluster: "eu",
+      encrypted: true,
+      authEndpoint: "/pusher/auth/presence"
+    });
+
+    this.presenceChannel = this.pusher.subscribe("presence-connection-channel");
+
+    var self = this;
+
+    this.presenceChannel.bind("pusher:subscription_succeeded", function () {
+      console.log("New subscriber", self.presenceChannel.members.me);
+    });
+
+    this.presenceChannel.bind("pusher:subscription_error", function (err) {
+      console.log("SUBSCRIPTION ERROR", err);
+    });
+  }
 });
 
 /***/ }),

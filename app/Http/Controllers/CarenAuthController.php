@@ -157,7 +157,7 @@ class CarenAuthController extends Controller
 
             $pusher = new Pusher($pusherAppKey, $pusherAppSecret, $pusherAppID);
             $presence_data = array('id' => $userId);
-            echo $pusher->presence_auth($request->channel_name, $request->socket_id, $userId, $presence_data);
+            echo $pusher->presence_auth($request->channel_name, $request->socket_id, $userId);
 
         } else {
 

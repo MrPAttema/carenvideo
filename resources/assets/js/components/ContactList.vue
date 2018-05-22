@@ -18,23 +18,44 @@
 </template>
 
 <script>
-    export default {
-        data () {
-            return {
-                error: null,
-                careProviders: []
-            }
-        },
-        props: ['users'],
-        created () {
-            let users = JSON.parse(this.users)
-            console.log(users)
-            
-            if (users.count === 0) {
-                this.error = 'Je hebt nog geen andere gebruikers.'
-            } else {
-                this.careProviders = users._embedded.items
-            }
-        }
+import Pusher from "pusher-js";
+
+export default {
+  data() {
+    return {
+      error: null,
+      careProviders: [],
+      pusher: null,
+      presenceChannel: null
+    };
+  },
+  props: ["users"],
+  created() {
+    let users = JSON.parse(this.users);
+
+    if (users.count === 0) {
+      this.error = "Je hebt nog geen andere gebruikers om mee te bellen.";
+    } else {
+      this.careProviders = users._embedded.items;
     }
+
+    this.pusher = new Pusher("8dc95d49e9a8f15e0980", {
+      cluster: "eu",
+      encrypted: true,
+      authEndpoint: "/pusher/auth/presence"
+    });
+
+    this.presenceChannel = this.pusher.subscribe("presence-connection-channel");
+
+    let self = this
+
+    this.presenceChannel.bind("pusher:subscription_succeeded", function() {
+      console.log("New subscriber", self.presenceChannel.members.me);
+    });
+
+    this.presenceChannel.bind("pusher:subscription_error", function(err) {
+      console.log("SUBSCRIPTION ERROR", err);
+    });
+  }
+};
 </script>
